@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  namespace: velero
+  name: velero
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: velero
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8085"
+        prometheus.io/path: "/metrics"
+    spec:
+      restartPolicy: Always
+      serviceAccountName: velero
+      containers:
+        - name: velero
+          image: quay.io/ocpmigrate/velero:fusor-dev
+          ports:
+            - name: metrics
+              containerPort: 8085
+          command:
+            - /velero
+          args:
+            - server
+          volumeMounts:
+            - name: {{ velero_aws_secret_name }}
+              mountPath: /credentials
+            - name: plugins
+              mountPath: /plugins
+            - name: scratch
+              mountPath: /scratch
+          env:
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: /credentials/cloud
+            - name: VELERO_SCRATCH_DIR
+              value: /scratch
+      volumes:
+        - name: {{ velero_aws_secret_name }}
+          secret:
+            secretName: {{ velero_aws_secret_name }}
+        - name: plugins
+          emptyDir: {}
+        - name: scratch
+          emptyDir: {}

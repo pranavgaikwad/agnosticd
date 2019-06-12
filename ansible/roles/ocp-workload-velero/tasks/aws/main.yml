@@ -1,0 +1,24 @@
+---
+- name: "{{ title }} AWS backupstoragelocation"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '{{ velero_provider }}/backup-storage-location.yml.j2') | from_yaml }}"
+  when: not destroy
+  
+- name: "{{ title }} AWS volumesnapshotlocation"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '{{ velero_provider }}/volume-snapshot-location.yml.j2') | from_yaml }}"
+  when: not destroy
+
+- name: "{{ title }} AWS secret"
+  k8s:
+    state: "{{ state }}"
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "{{ velero_aws_secret_name }}"
+        namespace: "{{ velero_namespace }}"
+      data:
+        cloud: "{{ lookup('template', '{{ velero_provider }}/secret.j2') | b64encode }}"

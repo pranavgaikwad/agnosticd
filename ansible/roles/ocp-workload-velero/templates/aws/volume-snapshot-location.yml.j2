@@ -1,0 +1,11 @@
+---
+apiVersion: velero.io/v1
+kind: VolumeSnapshotLocation
+metadata:
+  name: default-snapshot
+  namespace: {{ velero_namespace }}
+spec:
+  provider: aws
+  config:
+    region: {{ aws_region }}
+    profile: {{ velero_aws_bucket_cred_profile }}

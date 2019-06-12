@@ -1,0 +1,21 @@
+# Velero vars
+velero_version: 0.11.0
+velero_download_dir: "{{ playbook_dir }}"
+velero_provider: aws
+velero_namespace: velero
+velero_bsl_name: default
+
+# Velero + AWS vars
+velero_aws_key_prefix: velero
+velero_aws_secret_name: cloud-credentials
+velero_aws_bucket_cred_profile: default
+
+# AWS vars
+aws_region: us-east-1
+aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+
+# workload vars
+destroy: yes
+title: "{{ 'Creating' if not destroy else 'Removing' }}"
+state: "{{ 'present' if not destroy else 'absent' }}"     # state of k8s resources 

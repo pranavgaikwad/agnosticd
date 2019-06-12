@@ -1,0 +1,11 @@
+---
+- name: "Removing workload"
+  include_tasks: "{{ item }}"
+  with_items:
+    - './pre_workload.yml'
+    - './workload.yml'
+    - './post_workload.yml'
+  vars:
+    destroy: yes
+    state: absent
+    title: 'Removing'

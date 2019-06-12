@@ -1,0 +1,4 @@
+---
+- name: "Installing ocpmigrate plugin"
+  shell: "{{ velero_download_dir }}/velero/velero plugin add quay.io/ocpmigrate/velero-plugin"
+  when: state == "present"  
