@@ -1,18 +1,8 @@
 ---
-- name: "{{ title }} project"
-  k8s:
-    name: velero
-    kind: Namespace
-    state: "{{ state }}"
-
 - name: "{{ title }} custom CRD definitions"
   k8s:
     state: "{{ state }}"
     definition: "{{ lookup('file', 'velero-prereqs.yml')}}"
-
-- name: "Debug"
-  debug:
-    msg: "{{ velero_provider }}"
 
 - name: "Running tasks for {{ velero_provider }}"
   include_tasks: "./{{ velero_provider }}/main.yml"

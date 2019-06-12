@@ -9,3 +9,10 @@
     destroy: yes
     state: absent
     title: 'Removing'
+
+- name: "{{ title }} project"
+  k8s:
+    name: velero
+    kind: Namespace
+    state: absent
+  
