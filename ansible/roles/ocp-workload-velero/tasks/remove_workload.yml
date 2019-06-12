@@ -10,7 +10,7 @@
     state: absent
     title: 'Removing'
 
-- name: "{{ title }} project"
+- name: "Removing project"
   k8s:
     name: velero
     kind: Namespace
