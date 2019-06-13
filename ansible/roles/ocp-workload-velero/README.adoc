@@ -15,17 +15,18 @@ This workload is used to perform demo migrations from OCP 3 to OCP 4 clusters.
 [source, bash]
 ----
 ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
-    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \ <1>
-    -e"ansible_user=${ANSIBLE_USER}" \ <2>
-    -e"ocp_username=${OCP_USERNAME}" \ <3>
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \
+    -e"ansible_user=${ANSIBLE_USER}" \ 
+    -e"ocp_username=${OCP_USERNAME}" \ 
     -e"ocp_workload=ocp-workload-velero" \ 
     -e"silent=False" \
-    -e"guid=${GUID}" \ <4>
+    -e"guid=${GUID}" \
     -e"ACTION=create" \
     -e"velero_aws_bucket_name=bucket-name" \
     -e"student_userid=${ANSIBLE_USER}" \
-    -e @./secret.yaml <5>
+    -e @./secret.yaml <1>
 ----
+<1> Add your velero AWS credentials inside secret.yml file
 
 
 ==== Variables 
@@ -97,16 +98,17 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 
 === Delete Velero workload
 
+[source, bash]
 ----
 ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
-    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \ <1>
-    -e"ansible_user=${ANSIBLE_USER}" \ <2>
-    -e"ocp_username=${OCP_USERNAME}" \ <3>
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \
+    -e"ansible_user=${ANSIBLE_USER}" \
+    -e"ocp_username=${OCP_USERNAME}" \
     -e"ocp_workload=ocp-workload-velero" \ 
     -e"silent=False" \
-    -e"guid=${GUID}" \ <4>
+    -e"guid=${GUID}" \ 
     -e"ACTION=remove" \
-    -e"velero_aws_bucket_name=bucket-name" \ <5>
+    -e"velero_aws_bucket_name=bucket-name" \
     -e"student_userid=${ANSIBLE_USER}" \
-    -e @./secret.yaml <6>
+    -e @./secret.yaml
 ----
