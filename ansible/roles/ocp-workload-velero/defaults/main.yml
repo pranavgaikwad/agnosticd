@@ -1,5 +1,4 @@
 # Velero vars
-velero_download_dir: "{{ playbook_dir }}"
 velero_provider: aws
 velero_namespace: velero
 velero_bsl_name: default
@@ -10,11 +9,9 @@ velero_plugin_image: quay.io/ocpmigrate/velero-plugin:latest
 velero_aws_key_prefix: velero
 velero_aws_secret_name: cloud-credentials
 velero_aws_bucket_cred_profile: default
-
-# AWS vars
-aws_region: us-east-1
-aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
-aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+velero_aws_region: "{{ lookup('env', 'AWS_REGION') }}"
+velero_aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+velero_aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
 
 # workload vars
 destroy: "{{ False if ACTION == 'create' else True }}"

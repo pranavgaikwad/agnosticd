@@ -2,18 +2,111 @@
 
 == Overview
 
-This is a workload for Velero which is a backup / restore tool for Kubernetes. Following section explains how to install this workload on your OCP cluster.
+This is a workload for Velero, a backup / restore tool for Kubernetes. Following section explains how to install this workload on your OCP cluster.
 
 === Purpose
 
-Velero is used as a backup / restore tool by RedHat OCP Migration Controller. Migration Controller migrates applications from one OCP cluster to the another.
+Velero is used as a backup / restore tool by RedHat OCP Migration Controller. Migration Controller migrates applications from one OCP cluster to another.
 
-This workload is used for a demo migration. 
+This workload is used to perform demo migrations from OCP 3 to OCP 4 clusters. 
 
 === Deploy Velero using the workload
 
-Work in progress...
+[source, bash]
+----
+ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \ <1>
+    -e"ansible_user=${ANSIBLE_USER}" \ <2>
+    -e"ocp_username=${OCP_USERNAME}" \ <3>
+    -e"ocp_workload=ocp-workload-velero" \ 
+    -e"silent=False" \
+    -e"guid=${GUID}" \ <4>
+    -e"ACTION=create" \
+    -e"velero_aws_bucket_name=bucket-name" \
+    -e"student_userid=${ANSIBLE_USER}" \
+    -e @./secret.yaml <5>
+----
+
+
+==== Variables 
+
+|===
+| Variable | Default Value | Description | Required
+
+| velero_aws_region
+| -
+| Region for backend store
+| Yes
+
+| velero_aws_access_key_id
+| -
+| AWS key id
+| Yes
+
+| velero_aws_secret_access_key
+| -
+| AWS secret access key
+| Yes
+
+| velero_aws_bucket_name
+| - 
+| S3 bucket to store backups
+| Yes
+
+| velero_provider
+| aws
+| Backup & volume snapshot storage (Supported : AWS)
+| No
+
+| velero_namespace
+| velero
+| Name of the project in which Velero is launched 
+| No
+
+| velero_bsl_name
+| default
+| Name of backupstoragelocation resource created
+| No
+
+| velero_image
+| quay.io/ocpmigrate/velero:fusor-dev
+| Container image for Velero
+| No
+
+| velero_plugin_image
+| quay.io/ocpmigrate/velero-plugin:latest
+| Container image for mig-controller plugin
+| No
+
+| velero_aws_key_prefix
+| velero
+| Prefix for AWS keys 
+| No
+
+| velero_aws_secret_name
+| cloud-credential
+| Name for Kubernetes secret object created
+| No
+
+| velero_aws_bucket_cred_profile
+| default
+| Credential profile for AWS backup store
+| No
+|===
+
 
 === Delete Velero workload
 
-Work in progress...
+----
+ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \ <1>
+    -e"ansible_user=${ANSIBLE_USER}" \ <2>
+    -e"ocp_username=${OCP_USERNAME}" \ <3>
+    -e"ocp_workload=ocp-workload-velero" \ 
+    -e"silent=False" \
+    -e"guid=${GUID}" \ <4>
+    -e"ACTION=remove" \
+    -e"velero_aws_bucket_name=bucket-name" \ <5>
+    -e"student_userid=${ANSIBLE_USER}" \
+    -e @./secret.yaml <6>
+----
