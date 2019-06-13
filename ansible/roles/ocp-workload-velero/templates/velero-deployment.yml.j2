@@ -19,7 +19,7 @@ spec:
       serviceAccountName: velero
       containers:
         - name: velero
-          image: quay.io/ocpmigrate/velero:fusor-dev
+          image: {{ velero_image }}
           ports:
             - name: metrics
               containerPort: 8085
@@ -47,3 +47,13 @@ spec:
           emptyDir: {}
         - name: scratch
           emptyDir: {}
+      initContainers:
+        - image: {{ velero_plugin_image }}
+          imagePullPolicy: Always
+          name: velero-plugin
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /target
+            name: plugins

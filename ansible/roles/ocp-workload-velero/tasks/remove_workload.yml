@@ -7,12 +7,4 @@
     - './post_workload.yml'
   vars:
     destroy: yes
-    state: absent
-    title: 'Removing'
-
-- name: "Removing project"
-  k8s:
-    name: velero
-    kind: Namespace
-    state: absent
   

@@ -26,7 +26,7 @@ spec:
           emptyDir: {}
       containers:
         - name: velero
-          image: quay.io/ocpmigrate/velero:fusor-dev
+          image: {{ velero_image }}
           command:
             - /velero
           args:

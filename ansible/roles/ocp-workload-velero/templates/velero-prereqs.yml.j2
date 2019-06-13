@@ -166,14 +166,14 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: velero
+  name: {{ velero_namespace }}
 
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: velero
-  namespace: velero
+  namespace: {{ velero_namespace }}
   labels:
     component: velero
 
@@ -186,7 +186,7 @@ metadata:
     component: velero
 subjects:
   - kind: ServiceAccount
-    namespace: velero
+    namespace: {{ velero_namespace }}
     name: velero
 roleRef:
   kind: ClusterRole

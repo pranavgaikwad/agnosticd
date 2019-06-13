@@ -1,20 +1,5 @@
 ---
-- name: "Checking host OS"
-  set_fact: 
-    velero_release_type: "{{ 'darwin' if ansible_os_family == 'Darwin' else 'linux' }}"
-
-- name: "Generating Velero download URL"
-  set_fact:
-    velero_release_url: "https://github.com/heptio/velero/releases/download/v{{ velero_version }}/velero-v{{ velero_version }}-{{ velero_release_type }}-amd64.tar.gz"
-
-- name: "{{ title }} velero directory"
-  file:
-    path: "{{ velero_download_dir }}/velero"
-    state: "{{ 'directory' if not destroy else 'absent' }}"
-
-- name: "Get velero"
-  unarchive:
-    src: "{{ velero_release_url }}"
-    dest: "{{ velero_download_dir }}/velero"
-    remote_src: yes
-  when: not destroy
+- name: "{{ title }} custom CRD definitions"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', 'velero-prereqs.yml.j2')}}"

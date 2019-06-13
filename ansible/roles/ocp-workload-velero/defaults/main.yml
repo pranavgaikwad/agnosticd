@@ -1,9 +1,10 @@
 # Velero vars
-velero_version: 0.11.0
 velero_download_dir: "{{ playbook_dir }}"
 velero_provider: aws
 velero_namespace: velero
 velero_bsl_name: default
+velero_image: quay.io/ocpmigrate/velero:fusor-dev
+velero_plugin_image: quay.io/ocpmigrate/velero-plugin:latest
 
 # Velero + AWS vars
 velero_aws_key_prefix: velero
@@ -16,6 +17,6 @@ aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
 
 # workload vars
-destroy: no
+destroy: "{{ False if ACTION == 'create' else True }}"
 title: "{{ 'Creating' if not destroy else 'Removing' }}"
 state: "{{ 'present' if not destroy else 'absent' }}"     # state of k8s resources 

@@ -1,9 +1,4 @@
 ---
-- name: "{{ title }} custom CRD definitions"
-  k8s:
-    state: "{{ state }}"
-    definition: "{{ lookup('file', 'velero-prereqs.yml')}}"
-
 - name: "Running tasks for {{ velero_provider }}"
   include_tasks: "./{{ velero_provider }}/main.yml"
 
