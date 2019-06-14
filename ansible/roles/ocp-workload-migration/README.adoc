@@ -2,11 +2,11 @@
 
 == Overview
 
-This is a workload for Cluster Migraiton tool for Openshift. Following section explains how to install this workload on your OCP cluster.
+This is a workload for Red Hat Cluster Migration Tool. Following section explains how to install this workload on your OCP cluster.
 
 === Purpose
 
-Cluster Migration tool migrates applications from one OCP cluster to the another.
+Cluster Migration Tool migrates applications from one OCP cluster to another.
 
 This workload is used for a demo migration. 
 
@@ -127,4 +127,18 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 
 === Delete Velero workload
 
-Work in progress...
+[source,'bash']
+----
+ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \
+    -e"ansible_user=${ANSIBLE_USER}" \
+    -e"ocp_username=${OCP_USERNAME}" \
+    -e"ocp_workload=ocp-workload-velero" \
+    -e"silent=False" \
+    -e"guid=${GUID}" \
+    -e"ACTION=delete" \
+    -e"mig_aws_region=region" \
+    -e"mig_aws_bucket=bucket-name" \
+    -e"student_userid=${ANSIBLE_USER}" \
+    -e @./secret.yaml <1>
+----
