@@ -20,4 +20,4 @@ spec:
     namespace: {{ mig_namespace }}
 
   # [!] Change namespaces to adjust which OpenShift namespaces should be migrated from source to destination cluster
-  namespaces: {{ mig_migration_namespaces }}
+  namespaces: {{ mig_migration_namespaces.split(',') | list | to_yaml }}

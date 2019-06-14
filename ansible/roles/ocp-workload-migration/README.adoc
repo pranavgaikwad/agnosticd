@@ -1,0 +1,130 @@
+= Red Hat Cluster Migration Workload
+
+== Overview
+
+This is a workload for Cluster Migraiton tool for Openshift. Following section explains how to install this workload on your OCP cluster.
+
+=== Purpose
+
+Cluster Migration tool migrates applications from one OCP cluster to the another.
+
+This workload is used for a demo migration. 
+
+=== Deploy Mig Controller using the workload
+[source,'bash']
+----
+ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \
+    -e"ansible_user=${ANSIBLE_USER}" \
+    -e"ocp_username=${OCP_USERNAME}" \
+    -e"ocp_workload=ocp-workload-velero" \
+    -e"silent=False" \
+    -e"guid=${GUID}" \
+    -e"ACTION=create" \
+    -e"mig_aws_region=region" \
+    -e"mig_aws_bucket=bucket-name" \
+    -e"student_userid=${ANSIBLE_USER}" \
+    -e @./secret.yaml <1>
+----
+<1> Add your `mig_aws_{access_key_id|secret_access_key}` variables in `secret.yml`
+
+==== Variables
+
+|===
+| Variable | Default Value | Description | Required 
+
+| mig_aws_bucket 
+| -
+| S3 backup store
+| Yes
+
+| mig_aws_region 
+| - 
+| AWS Region
+| Yes
+
+| mig_aws_access_key_id
+| - 
+| AWS Access Key Id 
+| Yes
+
+| mig_aws_secret_access_key
+| - 
+| AWS Secret Access Key
+| Yes
+
+| mig_migration_namespaces
+| - 
+| Namespaces to migrate (Comma separated string of namespaces e.g. 'sample1,sample2')
+| Yes 
+
+| mig_cluster_remote_address
+| - 
+| URL to connect to remote cluster
+| Yes 
+
+| mig_sa_token_remote
+| - 
+| Service Account token for remote cluster
+| Yes
+
+| mig_controller_version
+| training-v1
+| Migration controller version
+| No
+
+| mig_namespace
+| mig  
+| Namespace for migration resources
+| No
+
+| mig_crd_{cluster\|migration\|plan\|storage\|registry}
+| Default CRDs used by controller
+| Migration controller CRDs
+| No
+
+| mig_storage_name
+| migration-sample 
+| Backend storage name
+| No
+
+| mig_storage_creds_name
+| migstorage-creds 
+| Backend storage credential name
+| No
+
+| mig_backup_storage_provider
+| aws
+| Backend store provider for backups
+| No
+
+| mig_volume_snapshot_provider
+| aws
+| Backend store provider for volume snapshots
+| No
+
+| mig_plan_name
+| migplan-sample
+| Name for migration plan
+| No
+
+| mig_migration_name
+| migmigration-sample
+| Name for migration 
+| No
+
+| mig_quiesce_pods
+| false
+| Quiesce pods or not 
+| No
+
+| mig_sa_token_remote_name
+| sa-token-remote
+| Name for SA token resource
+| Yes
+|===
+
+
+=== Delete Velero workload
+
+Work in progress...
