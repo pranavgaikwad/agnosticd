@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: {{ mssql_deployment_name }}
+  namespace: {{ mssql_namespace }}
+  labels:
+    app: {{ mssql_app_name }}
+spec:
+  replicas: 1
+  selector:
+    name: {{ mssql_app_name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: {{ mssql_app_name }}
+        app: {{ mssql_app_name }}
+    spec:
+      containers:
+      - env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mssql-password
+              name: {{ mssql_secret_name }}
+        image: {{ mssql_image }}
+        imagePullPolicy: IfNotPresent
+        name: {{ mssql_app_name }}
+        ports:
+        - containerPort: 1433
+        resources:
+          limits:
+            memory: 2Gi
+            cpu: 2
+          requests:
+            memory: 2Gi
+            cpu: 2
+        volumeMounts:
+        - mountPath: "/var/opt/mssql/data"
+          name: pv99
+      volumes:
+      - name: pv99
+        persistentVolumeClaim:
+          claimName: {{ mssql_pvc_name }}

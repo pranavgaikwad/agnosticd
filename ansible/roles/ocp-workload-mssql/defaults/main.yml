@@ -1,0 +1,18 @@
+mssql_namespace: mssql-persistent
+mssql_image: mcr.microsoft.com/mssql/server:2017-CU8-ubuntu
+mssql_sa_password: IaintNoKiddingYouGotASmallBrain1!
+
+# CRs 
+mssql_secret_name: mssql-secret
+mssql_deployment_name: mssql-deployment
+mssql_pvc_name: mssql-pvc
+mssql_app_name: mssql-container 
+
+# limits
+mssql_memory_limit: "3Gi"
+mssql_cpu_limit: "2"
+
+# workload vars
+destroy: "{{ False if ACTION == 'create' else True }}"
+title: "{{ 'Creating' if not destroy else 'Removing' }}"
+state: "{{ 'present' if not destroy else 'absent' }}"     # state of k8s resources 
