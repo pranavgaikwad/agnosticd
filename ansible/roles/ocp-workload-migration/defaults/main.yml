@@ -33,6 +33,7 @@ mig_migration_namespaces: []
 # mig migration 
 mig_migration_name: migmigration-sample
 mig_quiesce_pods: false
+mig_is_host_cluster: false
 
 # mig clusters
 mig_cluster_remote_name: migcluster-remote

@@ -11,3 +11,4 @@
     - "mig-storage-creds.yaml.j2"
     - "mig-storage.yaml.j2"
     - "mig-plan.yaml.j2"
+    - "mig-migration.yaml.j2"

@@ -113,6 +113,11 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 | Name for migration 
 | No
 
+| mig_is_host_cluster
+| false
+| Is host cluster 
+| No
+
 | mig_quiesce_pods
 | false
 | Quiesce pods or not 
