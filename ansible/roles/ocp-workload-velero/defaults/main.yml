@@ -6,7 +6,7 @@ velero_image: quay.io/ocpmigrate/velero:fusor-dev
 velero_plugin_image: quay.io/ocpmigrate/velero-plugin:latest
 
 # restic
-restic_pv_host_path: /tmp/openshift.local.clusterup/openshift.local.volumes/pods
+restic_pv_host_path: /tmp/openshift.local.clusterup/openshift.local.volumes/pods/
 
 # Velero + AWS vars
 velero_aws_key_prefix: velero
