@@ -2,3 +2,7 @@
 - name: "{{ title }} CRDs"
   include_tasks: "./crds.yml"
 
+- name: "{{ title }} mig controller"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', 'manifest.yaml.j2') }}"

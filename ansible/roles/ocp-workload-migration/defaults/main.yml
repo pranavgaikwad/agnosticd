@@ -8,8 +8,6 @@ mig_crd_migration: "{{ mig_config_repo }}/crds/migration_v1alpha1_migmigration.y
 mig_crd_plan: "{{ mig_config_repo }}/crds/migration_v1alpha1_migplan.yaml"
 mig_crd_storage: "{{ mig_config_repo }}/crds/migration_v1alpha1_migstorage.yaml"
 mig_crd_registry: https://raw.githubusercontent.com/kubernetes/cluster-registry/master/cluster-registry-crd.yaml
-# controller deployment
-mig_controller_release: "{{ mig_config_repo }}/releases/latest/manifest.yaml"
 
 
 ############################# CRs ###############################################################################
@@ -39,6 +37,9 @@ mig_is_host_cluster: false
 mig_cluster_remote_name: migcluster-remote
 mig_cluster_local_name: migcluster-local
 mig_cluster_remote_address: ""
+
+mig_is_local_cluster_host: false
+mig_is_remote_cluster_host: true
 
 # mig cluster remote
 cluster_remote_name: remote-cluster

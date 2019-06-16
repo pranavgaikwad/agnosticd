@@ -19,7 +19,6 @@
     - { name: "plan.yaml", url: "{{ mig_crd_plan }}" }
     - { name: "storage.yaml", url: "{{ mig_crd_storage }}" }
     - { name: "registry.yaml", url: "{{ mig_crd_registry }}" }
-    - { name: "controller.yaml", url: "{{ mig_controller_release }}" }
 
 - name: "{{ title }} CRDs"
   k8s:
@@ -31,7 +30,6 @@
     - "plan.yaml"
     - "storage.yaml"
     - "registry.yaml"
-    - "controller.yaml"
 
 - name: "Removing CRDs and controller deployment files"
   file:
