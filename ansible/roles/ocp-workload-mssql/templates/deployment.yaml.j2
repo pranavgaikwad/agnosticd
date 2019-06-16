@@ -41,8 +41,8 @@ spec:
             cpu: 2
         volumeMounts:
         - mountPath: "/var/opt/mssql/data"
-          name: pv99
+          name: vol99
       volumes:
-      - name: pv99
+      - name: vol99
         persistentVolumeClaim:
           claimName: {{ mssql_pvc_name }}
