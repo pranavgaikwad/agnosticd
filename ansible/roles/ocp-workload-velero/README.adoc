@@ -93,6 +93,11 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 | default
 | Credential profile for AWS backup store
 | No
+
+| restic_pv_host_path
+| /tmp/openshift.local.clusterup/openshift.local.volumes/pods
+| Path where PVs are mounted
+| No
 |===
 
 
