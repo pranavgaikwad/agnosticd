@@ -15,7 +15,7 @@ mssql_memory_limit: "3Gi"
 
 # mssql conf 
 mssql_port: 1433
-mssql_service_node_port: 1433
+mssql_service_node_port: 32001
 mssql_volume_mount_name: mssql-vol
 
 # workload vars
