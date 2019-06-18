@@ -1,16 +1,22 @@
 mssql_namespace: mssql-persistent
 mssql_image: mcr.microsoft.com/mssql/server:2017-CU8-ubuntu
-mssql_sa_password: IaintNoKiddingYouGotASmallBrain1!
+mssql_sa_password: P@ssw0rd1!
 
 # CRs 
-mssql_secret_name: mssql-secret
-mssql_deployment_name: mssql-deployment
 mssql_pvc_name: mssql-pvc
 mssql_app_name: mssql-container 
+mssql_secret_name: mssql-secret
+mssql_service_name: mssql-service
+mssql_deployment_name: mssql-deployment
 
 # limits
-mssql_memory_limit: "3Gi"
 mssql_cpu_limit: "2"
+mssql_memory_limit: "3Gi"
+
+# mssql conf 
+mssql_port: 1433
+mssql_service_node_port: 1433
+mssql_volume_mount_name: mssql-vol
 
 # workload vars
 destroy: "{{ False if ACTION == 'create' else True }}"

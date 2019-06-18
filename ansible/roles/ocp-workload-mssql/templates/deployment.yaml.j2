@@ -31,7 +31,7 @@ spec:
         imagePullPolicy: IfNotPresent
         name: {{ mssql_app_name }}
         ports:
-        - containerPort: 1433
+        - containerPort: {{ mssql_port }}
         resources:
           limits:
             memory: 2Gi
@@ -41,8 +41,8 @@ spec:
             cpu: 2
         volumeMounts:
         - mountPath: "/var/opt/mssql/data"
-          name: vol99
+          name: {{ mssql_volume_mount_name }}
       volumes:
-      - name: vol99
+      - name: {{ mssql_volume_mount_name }}
         persistentVolumeClaim:
           claimName: {{ mssql_pvc_name }}

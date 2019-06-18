@@ -8,3 +8,4 @@
     - "secret.yaml.j2"
     - "pvc.yaml.j2"
     - "deployment.yaml.j2"
+    - "service.yaml.j2"
