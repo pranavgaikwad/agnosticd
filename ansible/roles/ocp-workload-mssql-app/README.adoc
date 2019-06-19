@@ -1,10 +1,99 @@
-# ToDo App Workload (Node.js + MSSQL + Express)
+= ToDo App Workload (Node.js + MSSQL + Express)
 
-This is a demo app built with Node.js. It uses MSSQL as backend database. 
+This is a demo app built with Node.js. It uses MSSQL as backend database. MSSQL Database can be deployed using MSSQL Workload present in the same repo. 
 
-## Purpose
+== Purpose
 
-This workload is used to demonstrate a migration using Red Hat Cluster Migration Tool.
+This workload is used as a demo app by Cluster Migration Tool.
 
-It requires MSSQL instance running on OCP.
+=== Deploy ToDo app workload
+[source,'bash']
+----
+ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \
+    -e"ansible_user=${ANSIBLE_USER}" \
+    -e"ocp_username=${OCP_USERNAME}" \
+    -e"ocp_workload=ocp-workload-velero" \
+    -e"silent=False" \
+    -e"guid=${GUID}" \
+    -e"ACTION=create" \
+    -e"mssql_host=mssql_host_address" \
+    -e"mssql_user=mssql_username" \
+    -e"mssql_pass=mssql_password" \
+    -e"mssql_port=mssql_port" \
+    -e"student_userid=${ANSIBLE_USER}" \
+    -e @./secret.yaml
+----
 
+=== Variables
+
+|===
+| Variable | Default Value | Description | Required
+
+| mssql_host
+| -
+| MSSQL database host
+| Yes
+
+| mssql_user
+| -
+| MSSQL database user name
+| Yes
+
+| mssql_pass
+| -
+| MSSQL database password
+| Yes
+
+| mssql_port
+| -
+| MSSQL database port
+| Yes
+
+| mssql_app_image
+| quay.io/ocpmigrate/mssql-sample-app:master
+| MSSQL app docker image
+| No
+
+| mssql_app_service_port
+| 32002
+| Port for MSSQL App service
+| No
+
+| mssql_app_namespace
+| mssql-persistent
+| Namespace in which app to launch
+| No
+
+| mssql_app_name
+| mssql-node-app
+| Name for MSSQL app resource
+| No
+
+| mssql_app_deployment_name
+| mssql-app-deployment
+| Name for MSSQL app deployment
+| No
+
+| mssql_app_service_name
+| mssql-app-service
+| Name for MSSQL app service
+| No
+
+| mssql_app_route_name
+| mssql-app-route
+| Name for MSSQL app route
+| No
+|===
+
+=== Usage
+
+The app is launched at `localhost:3000` in the pod. A new route is created to expose the app at an URL.
+
+To get the URL use following command
+
+`
+oc get route -n ${mssql_app_namespace} ${mssql_app_route_name}
+`
+
+Replace two varibles with values you used during workload deployment.
