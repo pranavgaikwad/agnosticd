@@ -92,8 +92,9 @@ The app is launched at `localhost:3000` in the pod. A new route is created to ex
 
 To get the URL use following command
 
-`
+[source,'bash']
+----
 oc get route -n ${mssql_app_namespace} ${mssql_app_route_name}
-`
+----
 
 Replace two varibles with values you used during workload deployment.
