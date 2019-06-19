@@ -1,0 +1,10 @@
+# ToDo App Workload (Node.js + MSSQL + Express)
+
+This is a demo app built with Node.js. It uses MSSQL as backend database. 
+
+## Purpose
+
+This workload is used to demonstrate a migration using Red Hat Cluster Migration Tool.
+
+It requires MSSQL instance running on OCP.
+

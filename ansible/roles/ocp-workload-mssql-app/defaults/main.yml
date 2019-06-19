@@ -1,0 +1,22 @@
+mssql_app_namespace: mssql-persistent
+mssql_app_name: mssql-node-app
+
+# CR vars
+mssql_app_deployment_name: mssql-app-deployment
+mssql_app_service_name: mssql-app-service
+mssql_app_route_name: mssql-app-route
+mssql_app_service_selector: "{{ mssql_app_name }}"
+
+mssql_app_image: quay.io/ocpmigrate/mssql-sample-app:master
+mssql_app_service_port: 32002
+
+# MSSQL connection vars
+mssql_host: "{{ lookup('env', 'MSSQL_HOST') }}"
+mssql_user: "{{ lookup('env', 'MSSQL_USER') }}"
+mssql_pass: "{{ lookup('env', 'MSSQL_PASS') }}"
+mssql_port: "{{ lookup('env', 'MSSQL_PORT') }}"
+
+# workload vars
+destroy: "{{ False if ACTION=='create' else True }}"
+title: "{{ 'Creating' if not destroy else 'Removing' }}"
+state: "{{ 'present' if not destroy else 'absent' }}"     # state of k8s resources

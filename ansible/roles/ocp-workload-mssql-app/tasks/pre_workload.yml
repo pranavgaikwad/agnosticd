@@ -1,0 +1,4 @@
+---
+- name: "Running pre workload tasks"
+  debug:
+    msg: "Completed..."

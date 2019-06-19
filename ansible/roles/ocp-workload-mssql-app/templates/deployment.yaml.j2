@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+ name: {{ mssql_app_deployment_name }}
+ namespace: {{ mssql_app_namespace }}
+spec:
+ replicas: 1
+ template:
+   metadata:
+     labels:
+       app: {{ mssql_app_name }}
+   spec:
+     terminationGracePeriodSeconds: 10
+     containers:
+     - name: {{ mssql_app_name }}
+       image: {{ mssql_app_image }}
+       ports:
+       - containerPort: 3000
+       env:
+       - name: MSSQL_HOST
+         value: "{{ mssql_host }}"
+       - name: MSSQL_USER
+         value: "{{ mssql_user }}"
+       - name: MSSQL_PASS
+         value: "{{ mssql_pass }}"
+       - name: MSSQL_PORT
+         value: "{{ mssql_port }}"
