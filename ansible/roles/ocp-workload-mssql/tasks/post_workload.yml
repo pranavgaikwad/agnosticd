@@ -1,4 +1,17 @@
 ---
-- name: "Running post workload"
-  debug: 
-    msg: "Complete..."
+- name: "Getting facts about launched service"
+  k8s_facts:
+    api_version: v1 
+    kind: service 
+    name: "{{ mssql_service_name }}"
+    namespace: "{{ mssql_namespace }}"
+  register: mssql_service_facts
+  when: not destroy
+
+- name: "Please note following information..."
+  debug:
+    msg:
+      - "Service namespace is : {{ mssql_service_facts['resources'][0]['metadata']['namespace'] }}"
+      - "Service name is : {{ mssql_service_facts['resources'][0]['metadata']['name'] }}"
+  ignore_errors: true
+  when: not destroy
