@@ -1,4 +1,14 @@
 ---
-- name: "Running post workload tasks"
-  debug:
-    msg: "Completed..."
+- name: "Gathering information about launched service..."
+  k8s_facts: 
+    api_version: v1
+    kind: route
+    name: "{{ mssql_app_route_name }}"
+    namespace: "{{ mssql_app_namespace }}"
+  register: mssql_route_facts
+  when: not destroy
+
+- name: "Your app is launched at following URL..."
+  debug: 
+    msg: "{{ mssql_route_facts['resources'][0]['spec']['host'] }}"
+  when: not destroy
