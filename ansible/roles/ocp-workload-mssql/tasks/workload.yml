@@ -9,3 +9,20 @@
     - "pvc.yaml.j2"
     - "deployment.yaml.j2"
     - "service.yaml.j2"
+  
+- name: "Getting facts about launched service"
+  k8s_facts:
+    api_version: v1 
+    kind: service 
+    name: "{{ mssql_service_name }}"
+    namespace: "{{ mssql_namespace }}"
+  register: mssql_service_facts
+  when: not destroy
+
+- name: "Please note following information..."
+  debug:
+    msg:
+      - "Cluster IP is : {{ mssql_service_facts['resources'][0]['spec']['clusterIP'] }}"
+      - "External IPs are : {{ mssql_service_facts['resources'][0]['spec']['externalIPs'] }}"
+  ignore_errors: true
+  when: not destroy
