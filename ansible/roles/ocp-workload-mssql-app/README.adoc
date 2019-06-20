@@ -17,7 +17,8 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
     -e"silent=False" \
     -e"guid=${GUID}" \
     -e"ACTION=create" \
-    -e"mssql_host=mssql_host_address" \
+    -e"mssql_host_service_name=mssql_host_service_name" \
+    -e"mssql_host_service_namespace=mssql_host_service_namespace" \
     -e"mssql_user=mssql_username" \
     -e"mssql_pass=mssql_password" \
     -e"mssql_port=mssql_port" \
@@ -30,9 +31,14 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 |===
 | Variable | Default Value | Description | Required
 
-| mssql_host
+| mssql_host_service_name
 | -
-| MSSQL database host
+| MSSQL database host's exposed service name
+| Yes
+
+| mssql_host_service_namespace
+| - 
+| MSSQL database host's namespace
 | Yes
 
 | mssql_user
