@@ -8,7 +8,6 @@ mssql_app_route_name: mssql-app-route
 mssql_app_service_selector: "{{ mssql_app_name }}"
 
 mssql_app_image: quay.io/ocpmigrate/mssql-sample-app:master
-mssql_app_service_port: 32002
 
 # MSSQL connection vars
 mssql_host_service_name: mssql-service

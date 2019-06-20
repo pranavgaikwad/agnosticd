@@ -8,7 +8,7 @@ spec:
  selector:
    app: {{ mssql_app_service_selector }}
  ports:
-   - protocol: TCP
-     nodePort: {{ mssql_app_service_port }}
+   - name: "tcp"
+     protocol: TCP
      port: 3000
      targetPort: 3000
