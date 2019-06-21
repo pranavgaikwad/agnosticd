@@ -6,8 +6,6 @@ This is a workload for Velero, a backup / restore tool for Kubernetes. Following
 
 === Purpose
 
-Velero is used as a backup / restore tool by Red Hat Cluster Migration Tool.
-
 This workload is used to perform demo migrations from OCP 3 to OCP 4 clusters. 
 
 === Deploy Velero using the workload
