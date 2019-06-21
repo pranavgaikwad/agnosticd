@@ -114,7 +114,7 @@ By default, this workload chooses AWS as the backend store for Velero. You may w
 
 ==== NooBaa
 
-|===
+|====
 | Variable | Default Value | Description | Required
 | velero_noobaa_access_key_id
 | -
