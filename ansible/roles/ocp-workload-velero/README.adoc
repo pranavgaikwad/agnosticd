@@ -38,7 +38,7 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 
 | velero_provider
 | aws
-| Backup & volume snapshot storage (Supported : AWS)
+| Backup & volume snapshot storage (Supported : aws, noobaa)
 | No
 
 | velero_namespace
@@ -75,6 +75,7 @@ By default, this workload chooses AWS as the backend store for Velero. You may w
 
 |===
 | Variable | Default Value | Description | Required
+
 | velero_aws_region
 | -
 | S3 region
@@ -116,6 +117,7 @@ By default, this workload chooses AWS as the backend store for Velero. You may w
 
 |===
 | Variable | Default Value | Description | Required
+
 | velero_noobaa_access_key_id
 | -
 | NooBaa key id
