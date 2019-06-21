@@ -155,7 +155,7 @@ By default, this workload chooses AWS as the backend store for Velero. You may w
 | default
 | Credential profile for NooBaa backup store
 | No
-|====
+|===
 
 
 === Delete Velero workload
