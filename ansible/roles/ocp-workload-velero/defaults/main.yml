@@ -8,13 +8,22 @@ velero_plugin_image: quay.io/ocpmigrate/velero-plugin:latest
 # restic
 restic_pv_host_path: /var/lib/origin/openshift.local.volumes/pods
 
-# Velero + AWS vars
+# Velero + AWS
 velero_aws_key_prefix: velero
 velero_aws_secret_name: cloud-credentials
 velero_aws_bucket_cred_profile: default
 velero_aws_region: "{{ lookup('env', 'AWS_REGION') }}"
 velero_aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 velero_aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+
+# Velero + NooBaa
+velero_noobaa_key_prefix: nobaa
+velero_noobaa_secret_name: cloud-credentials
+velero_noobaa_bucket_cred_profile: default
+velero_noobaa_service_url: s3.noobaa.svc.cluster.local
+velero_noobaa_region: noobaa
+velero_noobaa_access_key_id: "{{ lookup('env', 'NOOBAA_ACCESS_KEY_ID') }}"
+velero_noobaa_secret_access_key: "{{ lookup('env', 'NOOBAA_SECRET_ACCESS_KEY') }}"
 
 # workload vars
 destroy: "{{ False if ACTION == 'create' else True }}"

@@ -6,7 +6,7 @@ This is a workload for Velero, a backup / restore tool for Kubernetes. Following
 
 === Purpose
 
-Velero is used as a backup / restore tool by RedHat OCP Migration Controller. Migration Controller migrates applications from one OCP cluster to another.
+Velero is used as a backup / restore tool by Red Hat Cluster Migration Tool.
 
 This workload is used to perform demo migrations from OCP 3 to OCP 4 clusters. 
 
@@ -21,38 +21,20 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
     -e"ocp_workload=ocp-workload-velero" \ 
     -e"silent=False" \
     -e"guid=${GUID}" \
-    -e"ACTION=create" \
-    -e"velero_aws_bucket_name=bucket-name" \
+    -e"ACTION=create" \d
     -e"student_userid=${ANSIBLE_USER}" \
-    -e @./secret.yaml <1>
+    -e @./workload_vars.yaml <1>
+    -e @./secret.yaml <2>
 ----
-<1> Add your velero AWS credentials inside secret.yml file
+<1> Add all the variables marked as required in the following table in this file
+<2> This is the same file you used while deploying OCP cluster using agnosticd. Optionally, include sensitive workload variables here.
 
+=== Variables 
 
-==== Variables 
+==== General 
 
 |===
 | Variable | Default Value | Description | Required
-
-| velero_aws_region
-| -
-| Region for backend store
-| Yes
-
-| velero_aws_access_key_id
-| -
-| AWS key id
-| Yes
-
-| velero_aws_secret_access_key
-| -
-| AWS secret access key
-| Yes
-
-| velero_aws_bucket_name
-| - 
-| S3 bucket to store backups
-| Yes
 
 | velero_provider
 | aws
@@ -79,6 +61,40 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 | Container image for mig-controller plugin
 | No
 
+| restic_pv_host_path
+| /tmp/openshift.local.clusterup/openshift.local.volumes/pods
+| Path where PVs are mounted
+| No
+|===
+
+==== Storage Provider Variables
+
+By default, this workload chooses AWS as the backend store for Velero. You may wish to choose other providers by overriding `velero_provider`. You need to include variables applicable to the provider you choose.
+
+==== AWS
+
+|===
+| Variable | Default Value | Description | Required
+| velero_aws_region
+| -
+| S3 region
+| Yes
+
+| velero_aws_bucket_name
+| - 
+| S3 bucket for backup storage
+| Yes
+
+| velero_aws_access_key_id
+| -
+| AWS key id
+| Yes
+
+| velero_aws_secret_access_key
+| default
+| AWS secret 
+| Yes
+
 | velero_aws_key_prefix
 | velero
 | Prefix for AWS keys 
@@ -93,12 +109,53 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 | default
 | Credential profile for AWS backup store
 | No
+|====
 
-| restic_pv_host_path
-| /tmp/openshift.local.clusterup/openshift.local.volumes/pods
-| Path where PVs are mounted
-| No
+
+==== NooBaa
+
 |===
+| Variable | Default Value | Description | Required
+| velero_noobaa_access_key_id
+| -
+| NooBaa key id
+| Yes
+
+| velero_noobaa_bucket_name
+| - 
+| NooBaa bucket for backup storage
+| Yes
+
+| velero_noobaa_secret_access_key
+| -
+| NooBaa secret 
+| Yes
+
+| velero_noobaa_service_url
+| s3.noobaa.svc.cluster.local
+| Service endpoint NooBaa
+| No
+
+| velero_noobaa_region
+| noobaa
+| S3 region in NooBaa
+| No
+
+| velero_noobaa_key_prefix
+| velero
+| Prefix for NooBaa keys 
+| No
+
+| velero_noobaa_secret_name
+| cloud-credential
+| Name for Kubernetes secret object created
+| No
+
+| velero_noobaa_bucket_cred_profile
+| default
+| Credential profile for NooBaa backup store
+| No
+|====
 
 
 === Delete Velero workload
@@ -113,7 +170,7 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
     -e"silent=False" \
     -e"guid=${GUID}" \ 
     -e"ACTION=remove" \
-    -e"velero_aws_bucket_name=bucket-name" \
     -e"student_userid=${ANSIBLE_USER}" \
     -e @./secret.yaml
+    -e @./workload_vars.yaml
 ----

@@ -1,0 +1,18 @@
+---
+- name: "{{ title }} NooBaa backupstoragelocation"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', '{{ velero_provider }}/backup-storage-location.yml.j2') | from_yaml }}"
+  when: not destroy
+
+- name: "{{ title }} NooBaa secret"
+  k8s:
+    state: "{{ state }}"
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "{{ velero_noobaa_secret_name }}"
+        namespace: "{{ velero_namespace }}"
+      data:
+        cloud: "{{ lookup('template', '{{ velero_provider }}/secret.j2') | b64encode }}"
