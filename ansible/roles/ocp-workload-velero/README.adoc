@@ -109,12 +109,12 @@ By default, this workload chooses AWS as the backend store for Velero. You may w
 | default
 | Credential profile for AWS backup store
 | No
-|====
+|===
 
 
 ==== NooBaa
 
-|====
+|===
 | Variable | Default Value | Description | Required
 | velero_noobaa_access_key_id
 | -
