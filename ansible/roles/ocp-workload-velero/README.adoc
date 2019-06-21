@@ -2,7 +2,7 @@
 
 == Overview
 
-This is a workload for Velero, a backup / restore tool for Kubernetes. Following section explains how to install this workload on your OCP cluster.
+This is a workload for Velero, a backup / restore tool for Kubernetes. Following sections explain how to install this workload on your OCP cluster.
 
 === Purpose
 
@@ -23,10 +23,10 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
     -e"guid=${GUID}" \
     -e"ACTION=create" \d
     -e"student_userid=${ANSIBLE_USER}" \
-    -e @./workload_vars.yaml <1>
+    -e @./workload_vars.yaml \ <1>
     -e @./secret.yaml <2>
 ----
-<1> Add all the variables marked as required in the following table in this file
+<1> Add all the variables marked as required from the following table in this file
 <2> This is the same file you used while deploying OCP cluster using agnosticd. Optionally, include sensitive workload variables here.
 
 === Variables 
@@ -173,6 +173,6 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
     -e"guid=${GUID}" \ 
     -e"ACTION=remove" \
     -e"student_userid=${ANSIBLE_USER}" \
-    -e @./secret.yaml
+    -e @./secret.yaml \
     -e @./workload_vars.yaml
 ----
