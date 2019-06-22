@@ -1,0 +1,11 @@
+---
+kind: RoleBinding
+apiVersion: v1
+roleRef:
+  name: system:image-puller
+metadata:
+  name: system:image-puller
+  namespace: {{ mssql_namespace }}
+subjects:
+  - kind: SystemGroup
+    name: system:serviceaccounts:{{ mssql_namespace }}

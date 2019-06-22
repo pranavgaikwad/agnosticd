@@ -5,17 +5,7 @@
     definition: "{{ lookup('template', item) }}"
   with_items:
     - "namespace.yaml.j2"
-
-- name: "Adding adm policy for SQL server namespace"
-  shell: "oc adm policy add-scc-to-user anyuid -n {{ mssql_namespace }} -z default"
-  ignore_errors: yes
-  when: not destroy
-
-- name: "{{ title }} CRs"
-  k8s:
-    state: "{{ state }}"
-    definition: "{{ lookup('template', item) }}"
-  with_items:
+    - "rolebinding.yaml.j2"
     - "secret.yaml.j2"
     - "pvc.yaml.j2"
     - "deployment.yaml.j2"
