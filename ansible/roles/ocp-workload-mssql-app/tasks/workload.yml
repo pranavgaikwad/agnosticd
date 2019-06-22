@@ -4,6 +4,7 @@
     state: "{{ state }}"
     definition: "{{ lookup('template', item) }}"
   with_items:
+    - "namespace.yaml.j2"
     - "deployment.yaml.j2"
     - "service.yaml.j2"
     - "route.yaml.j2"
