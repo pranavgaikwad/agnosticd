@@ -6,7 +6,7 @@ metadata:
   name: {{ mig_storage_name }}
   namespace: {{ mig_namespace }}
 spec:
-  backupStorageProvider: {{ mig_backup_storage_provider }}
+  backupStorageProvider: {{ mig_backup_storage_provider if mig_backup_storage_provider != "noobaa" else "aws" }}
   volumeSnapshotProvider: {{ mig_volume_snapshot_provider }}
 
 {% include '' + mig_backup_storage_provider + '/backup-storage-config.j2' %}
