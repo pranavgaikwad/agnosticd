@@ -12,17 +12,24 @@ mig_crd_registry: https://raw.githubusercontent.com/kubernetes/cluster-registry/
 
 ############################# CRs ###############################################################################
 
+# mig storage 
+mig_storage_name: migration-sample
+mig_storage_creds_name: migstorage-creds
+mig_backup_storage_provider: aws
+mig_volume_snapshot_provider: aws
+
 # mig aws 
 mig_aws_bucket: ""
 mig_aws_region: "{{ lookup('env', 'AWS_REGION') }}"
 mig_aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 mig_aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
 
-# mig storage 
-mig_storage_name: migration-sample
-mig_storage_creds_name: migstorage-creds
-mig_backup_storage_provider: aws
-mig_volume_snapshot_provider: aws
+# NooBaa configuration
+mig_noobaa_bucket: ""
+mig_noobaa_region: noobaa
+mig_noobaa_s3_url: s3.noobaa.svc.cluster.local
+mig_noobaa_access_key_id: "{{ lookup('env', 'NOOBAA_ACCESS_KEY_ID') }}"
+mig_noobaa_secret_access_key: "{{ lookup('env', 'NOOBAA_SECRET_ACCESS_KEY') }}"
 
 # mig plan
 mig_plan_name: migplan-sample

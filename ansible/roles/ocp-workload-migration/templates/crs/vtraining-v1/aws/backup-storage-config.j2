@@ -1,0 +1,11 @@
+  backupStorageConfig:
+    awsBucketName: {{ mig_aws_bucket }}
+    awsRegion: {{ mig_aws_region }}
+
+    credsSecretRef:
+      namespace: {{ mig_namespace }}
+      name: {{ mig_storage_creds_name }}
+
+    #awsKmsKeyId: foo
+    #awsPublicUrl: foo
+    #awsSignatureVersion: "4"

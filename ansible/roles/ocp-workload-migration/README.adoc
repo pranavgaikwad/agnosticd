@@ -2,13 +2,9 @@
 
 == Overview
 
-This is a workload for Red Hat Cluster Migration Tool. Following section explains how to install this workload on your OCP cluster.
+This is a workload for Red Hat Cluster Migration Tool. It migrates applications from one OCP cluster to another.
 
-=== Purpose
-
-Cluster Migration Tool migrates applications from one OCP cluster to another.
-
-This workload is used for a demo migration. 
+Following section explains how to install this workload on your OCP cluster.
 
 === Deploy Mig Controller using the workload
 [source,'bash']
@@ -33,26 +29,6 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 |===
 | Variable | Default Value | Description | Required 
 
-| mig_aws_bucket 
-| -
-| S3 backup store
-| Yes
-
-| mig_aws_region 
-| - 
-| AWS Region
-| Yes
-
-| mig_aws_access_key_id
-| - 
-| AWS Access Key Id 
-| Yes
-
-| mig_aws_secret_access_key
-| - 
-| AWS Secret Access Key
-| Yes
-
 | mig_migration_namespaces
 | - 
 | Namespaces to migrate (Comma separated string of namespaces e.g. 'sample1,sample2')
@@ -74,7 +50,7 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 | No
 
 | mig_namespace
-| mig  
+| mig
 | Namespace for migration resources
 | No
 
@@ -134,6 +110,71 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 | Yes
 |===
 
+
+==== Backup Storage Locations
+
+Migration controller uses AWS S3 as default backup location. You can change the backup location provider by overriding `mig_backup_storage_provider`.
+
+Supported backup storage providers are - aws, noobaa.
+
+Volume snapshot locations are not supported with NooBaa. Please use S3 for volume snapshots.
+
+==== AWS 
+
+|===
+| Variable | Default | Description | Required
+
+| mig_aws_bucket 
+| -
+| S3 backup store
+| Yes
+
+| mig_aws_region 
+| - 
+| AWS Region
+| Yes
+
+| mig_aws_access_key_id
+| - 
+| AWS Access Key Id 
+| Yes
+
+| mig_aws_secret_access_key
+| - 
+| AWS Secret Access Key
+| Yes
+|===
+
+==== NooBaa 
+
+|===
+| Variable | Default | Description | Required
+
+| mig_noobaa_bucket 
+| -
+| NooBaa bucket name
+| Yes
+
+| mig_noobaa_s3_url
+| -
+| NooBaa service endpoint
+| Yes
+
+| mig_aws_access_key_id
+| - 
+| NooBaa access key id 
+| Yes
+
+| mig_aws_secret_access_key
+| - 
+| NooBaa secret access key
+| Yes
+
+| mig_noobaa_region 
+| noobaa
+| NooBaa region
+| No
+|===
 
 === Delete Velero workload
 
