@@ -10,8 +10,7 @@ mssql_app_service_selector: "{{ mssql_app_name }}"
 mssql_app_image: quay.io/ocpmigrate/mssql-sample-app:master
 
 # MSSQL connection vars
-mssql_host_service_name: mssql-service
-mssql_host_service_namespace: "{{ mssql_app_namespace }}"
+mssql_host_service_url: mssql-service.{{ mssql_app_namespace }}.svc.cluster.local
 mssql_user: "{{ lookup('env', 'MSSQL_USER') }}"
 mssql_pass: "{{ lookup('env', 'MSSQL_PASS') }}"
 mssql_port: "{{ lookup('env', 'MSSQL_PORT') }}"

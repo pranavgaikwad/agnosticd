@@ -31,14 +31,9 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 |===
 | Variable | Default Value | Description | Required
 
-| mssql_host_service_name
+| mssql_host_service_url
 | -
-| MSSQL database host's exposed service name
-| Yes
-
-| mssql_host_service_namespace
-| - 
-| MSSQL database host's namespace
+| MSSQL database host's service endpoint
 | Yes
 
 | mssql_user
@@ -94,7 +89,9 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 
 === Usage
 
-The app is launched at `localhost:3000` in the pod. A new route is created to expose the app at an URL.
+The app is launched at `localhost:3000` in the pod. The app takes 2 minutes to launch.
+
+A new route is created to expose the app at an URL.
 
 To get the URL use following command
 
