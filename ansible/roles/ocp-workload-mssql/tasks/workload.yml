@@ -7,6 +7,15 @@
     - "namespace.yaml.j2"
     - "rolebinding.yaml.j2"
     - "secret.yaml.j2"
-    - "pvc.yaml.j2"
+
+- name: "{{ title }} storage"
+  include_tasks: "./storage/{{ mssql_pv_provider }}/main.yml"
+
+- name: "{{ title }} CRs"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item) }}"
+  with_items:
     - "deployment.yaml.j2"
     - "service.yaml.j2"
+  

@@ -9,6 +9,13 @@ mssql_secret_name: mssql-secret
 mssql_service_name: mssql-service
 mssql_deployment_name: mssql-deployment
 
+# pv conf
+mssql_pv_provider: default
+mssql_nfs_pv_name: mssql-pv
+mssql_nfs_pv_storage_capacity: "10Gi"
+mssql_nfs_pv_server: ""
+mssql_nfs_pv_path: ""
+
 # limits
 mssql_cpu_limit: "2"
 mssql_memory_limit: "3Gi"

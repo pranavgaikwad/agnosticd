@@ -25,12 +25,19 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 ----
 <1> This is the same file you used while deploying OCP cluster using agnosticd. Optionally, include sensitive workload variables here.
 
-This workload does not require any extra arguments. However, you can choose to override default variables.
+SQL server uses default volume made available through a PVC. However, you may choose to create your own PV by setting `mssql_pv_provider`.
+
+Supported providers are - default, nfs. 
 
 === Variables 
 
 |===
 | Variable | Default Value | Description | Required
+
+| mssql_pv_provider
+| default
+| Type of PV to use
+| No
 
 | mssql_namespace
 | mssql-persistent
@@ -93,6 +100,33 @@ This workload does not require any extra arguments. However, you can choose to o
 | No
 |===
 
+==== PV Provider configuration
+
+===== NFS
+
+|===
+| Variable | Default Value | Description | Required
+
+| mssql_nfs_pv_server
+| -
+| NFS Server
+| Yes
+
+| mssql_nfs_pv_path
+| - 
+| Volume Path
+| Yes
+
+| mssql_nfs_pv_name
+| mssql-pv
+| Name of the pv
+| No
+
+| mssql_nfs_pv_storage_capacity
+| 10Gi
+| Storage capacity of nfs pv
+| No
+|===
 
 === Delete MsSQL Workload
 
