@@ -4,5 +4,5 @@
     state: "{{ state }}"
     definition: "{{ lookup('template', item) }}"
   with_items:
-    - "storage/{{ nfs_pv_provider }}/pv.yaml.j2"
-    - "storage/{{ nfs_pv_provider }}/pvc.yaml.j2"
+    - "storage/{{ mssql_pv_provider }}/pv.yaml.j2"
+    - "storage/{{ mssql_pv_provider }}/pvc.yaml.j2"
