@@ -1,0 +1,8 @@
+---
+- name: "{{ title }} mig ui resources"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item) }}"
+  with_items:
+    - "namespace.yaml.j2"
+    - "pod.yaml.j2"

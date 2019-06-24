@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ mig_ui_pod_name }}
+  labels:
+    app: {{ mig_ui_app_name }}
+spec:
+  containers:
+  - name: {{ mig_ui_container_name }}
+    image: {{ mig_ui_image }}
