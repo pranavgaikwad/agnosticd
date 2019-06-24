@@ -1,7 +1,9 @@
+mig_ui_namespace: mig
 mig_ui_pod_name: mig-ui-pod
 mig_ui_container_name: mig-ui-container
 mig_ui_image: quay.io/ocpmigrate/mig-ui:master
-mig_ui_app_name: "{{ mig_ui_pod_name }}"
+mig_ui_app_name: mig-ui-app
+mig_ui_container_port: 9000
 
 # workload vars
 destroy: "{{ False if ACTION == 'create' else True }}"

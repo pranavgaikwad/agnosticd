@@ -1,5 +1,74 @@
 = Cluster Migration Tool UI
 
-This is the workload for migration UI. 
+This is the workload for migration UI. Before deploying this workload, mig controller is required to be running on the host cluster.
+
+You can find the controller workload under `ocp-workload-migration` directory in the same repo. Set `mig_mode` variable to `ui` to run migration controller. 
+
+== Deploying mig Ui workload
+
+[source, bash]
+----
+ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \
+    -e"ansible_user=${ANSIBLE_USER}" \ 
+    -e"ocp_username=${OCP_USERNAME}" \ 
+    -e"ocp_workload=ocp-workload-velero" \ 
+    -e"silent=False" \
+    -e"guid=${GUID}" \
+    -e"ACTION=create" \d
+    -e"student_userid=${ANSIBLE_USER}" \
+    -e @./secret.yaml <1>
+----
+<1> This is the same file you used while deploying OCP cluster using agnosticd. Optionally, include sensitive workload variables here.
 
 == Variables
+
+|===
+| Variable | Default | Description | Required
+
+| mig_ui_namespace
+| mig
+| Namespace for mig ui
+| No
+
+| mig_ui_container_port
+| 9000
+| Mig ui app port
+| No
+
+| mig_ui_pod_name
+| mig_ui_pod
+| Name for mig ui pod
+| No
+
+| mig_ui_container_name
+| mig_ui_container
+| Name for mig ui container
+| No
+
+| mig_ui_image
+| quay.io/ocpmigrate/mig-ui:master
+| Migration ui container image
+| No
+
+| mig_ui_app_name
+| mig-ui-app
+| Migration ui app name
+| No
+|===
+
+=== Delete mig ui Workload
+
+[source, bash]
+----
+ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
+    -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \
+    -e"ansible_user=${ANSIBLE_USER}" \
+    -e"ocp_username=${OCP_USERNAME}" \
+    -e"ocp_workload=ocp-workload-velero" \ 
+    -e"silent=False" \
+    -e"guid=${GUID}" \ 
+    -e"ACTION=remove" \
+    -e"student_userid=${ANSIBLE_USER}" \
+    -e @./secret.yaml 
+----
