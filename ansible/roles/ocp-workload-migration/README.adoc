@@ -24,6 +24,10 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 ----
 <1> Add your `mig_aws_{access_key_id|secret_access_key}` variables in `secret.yml`
 
+`mig_mode` variable decides whether to run the controller using CLI or UI.
+
+To run using UI, you need to deploy `ocp-workload-mig-ui`.   
+
 ==== Variables
 
 |===
@@ -43,6 +47,11 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 | - 
 | Service Account token for remote cluster
 | Yes
+
+| mig_mode
+| cli
+| Run migration through cli ? (cli / ui)
+| No
 
 | mig_controller_version
 | training-v1
@@ -107,7 +116,7 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 | mig_sa_token_remote_name
 | sa-token-remote
 | Name for SA token resource
-| Yes
+| No
 |===
 
 
