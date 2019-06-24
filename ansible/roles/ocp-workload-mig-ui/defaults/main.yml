@@ -3,9 +3,9 @@ mig_ui_pod_name: mig-ui-pod
 mig_ui_container_name: mig-ui-container
 mig_ui_image: quay.io/ocpmigrate/mig-ui:master
 mig_ui_app_name: mig-ui-app
-mig_ui_container_port: 9000
+mig_ui_container_port: 9000 
 
 # workload vars
 destroy: "{{ False if ACTION == 'create' else True }}"
 title: "{{ 'Creating' if not destroy else 'Removing' }}"
-state: "{{ 'present' if not destroy else 'absent' }}"     # state of k8s resources 
+state: "{{ 'present' if not destroy else 'absent' }}"     # state of k8s resources mig_ui_pod
