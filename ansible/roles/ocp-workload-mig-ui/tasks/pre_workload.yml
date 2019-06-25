@@ -1,4 +1,8 @@
 ---
-- name: "Running pre-workload tasks"
-  debug:
-    msg: "Complete..."
+- name: "{{ title }} namespace"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', item) | from_yaml }}"
+  loop:
+    - "namespace.yaml.j2"
+  when: cleanup_namespaces or not destroy

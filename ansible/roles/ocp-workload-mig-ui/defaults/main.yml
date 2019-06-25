@@ -1,9 +1,19 @@
+---
+mig_ui_cluster_api_endpoint: ''
+
+# defaults file for mig-ui
+mig_ui_name: mig-ui
 mig_ui_namespace: mig
-mig_ui_pod_name: mig-ui-pod
-mig_ui_container_name: mig-ui-container
 mig_ui_image: quay.io/ocpmigrate/mig-ui:latest
-mig_ui_app_name: mig-ui-app
-mig_ui_container_port: 9000 
+mig_ui_image_pull_policy: Always
+mig_ui_migmeta_configmap_name : mig-ui-config
+mig_ui_secrets_namespace: mig
+mig_ui_oauth_user_scope: "user:full"
+mig_ui_oauth_client_id: "{{ mig_ui_name }}"
+mig_ui_host_cluster_name: "host"
+
+# tells whether to clean up the namespace while destroying
+cleanup_namespaces: false
 
 # workload vars
 destroy: "{{ False if ACTION == 'create' else True }}"
