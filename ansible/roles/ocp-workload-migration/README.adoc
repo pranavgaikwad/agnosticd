@@ -53,6 +53,11 @@ To run using UI, you need to deploy `ocp-workload-mig-ui` along with this worklo
 | Run migration through cli or ui (Values : cli, ui)
 | No
 
+| mig_controller_image
+| quay.io/ocpmigrate/mig-controller
+| Container image for mig controller
+| No
+
 | mig_controller_version
 | training-v1
 | Migration controller version

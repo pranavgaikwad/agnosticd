@@ -1,4 +1,5 @@
 mig_mode: cli
+mig_controller_image: quay.io/ocpmigrate/mig-controller
 mig_controller_version: training-v1
 mig_namespace: mig
 mig_config_repo: https://raw.githubusercontent.com/fusor/mig-controller/{{ mig_controller_version }}/config
