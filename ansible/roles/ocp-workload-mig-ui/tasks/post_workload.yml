@@ -1,9 +1,4 @@
 ---
-- name: Finding route URL 
-  set_fact: 
-    mig_ui_route_cors_url: "{{ lookup('k8s', api_version='route.openshift.io/v1', kind='Route', namespace=mig_ui_namespace, resource_name=mig_ui_name) | json_query('spec.host') }}"
-  when: not destroy
-
 - name: Update CORS Settings
   shell: "oc patch {{ item.kind }} {{ item.name }} -p '{{ lookup('template', item.patch_file) }}' --type=merge"
   loop:
@@ -11,15 +6,7 @@
     - { name: 'cluster', kind: 'authentication.operator', patch_file: './authentication.patch.yaml.j2' }  
   when: not destroy
 
-- name: Output resolved mig-ui route
-  debug:
-    msg: "https://{{ mig_ui_route_cors_url }}"
-  when: not destroy
 
-- name: Set mig_ui_oauth_redirect_url
-  set_fact:
-    mig_ui_oauth_redirect_url: "https://{{ mig_ui_route_cors_url }}/login/callback"
-  when: not destroy
 
 - name: Output resolved redirect route
   debug:
