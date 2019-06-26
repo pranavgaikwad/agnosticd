@@ -13,20 +13,20 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
     -e"ansible_ssh_private_key_file=${ANSIBLE_USER_KEY_FILE}" \
     -e"ansible_user=${ANSIBLE_USER}" \
     -e"ocp_username=${OCP_USERNAME}" \
-    -e"ocp_workload=ocp-workload-velero" \
+    -e"ocp_workload=ocp-workload-migration" \
     -e"silent=False" \
     -e"guid=${GUID}" \
     -e"ACTION=create" \
-    -e"mig_aws_region=region" \
-    -e"mig_aws_bucket=bucket-name" \
     -e"student_userid=${ANSIBLE_USER}" \
-    -e @./secret.yaml <1>
+    -e @./secret.yaml <1> \
+    -e @./workload.yaml <2>
 ----
 <1> Add your `mig_aws_{access_key_id|secret_access_key}` variables in `secret.yml`
+<2> All variables required by the workload go in this file
 
 `mig_mode` variable decides whether to run the controller using CLI or UI.
 
-To run using UI, you need to deploy `ocp-workload-mig-ui`.   
+To run using UI, you need to deploy `ocp-workload-mig-ui` along with this workload.   
 
 ==== Variables
 
@@ -50,7 +50,7 @@ To run using UI, you need to deploy `ocp-workload-mig-ui`.
 
 | mig_mode
 | cli
-| Run migration through cli ? (cli / ui)
+| Run migration through cli or ui (Values : cli, ui)
 | No
 
 | mig_controller_version
@@ -117,6 +117,11 @@ To run using UI, you need to deploy `ocp-workload-mig-ui`.
 | sa-token-remote
 | Name for SA token resource
 | No
+
+| mig_cleanup_namespace
+| false
+| Clean the namespace when removing workload?
+| No
 |===
 
 
@@ -124,7 +129,7 @@ To run using UI, you need to deploy `ocp-workload-mig-ui`.
 
 Migration controller uses AWS S3 as default backup location. You can change the backup location provider by overriding `mig_backup_storage_provider`.
 
-Supported backup storage providers are - aws, noobaa.
+Supported backup storage providers are - aws, noobaa. (Please note that `noobaa` is not fully tested)
 
 Volume snapshot locations are not supported with NooBaa. Please use S3 for volume snapshots.
 
@@ -135,7 +140,7 @@ Volume snapshot locations are not supported with NooBaa. Please use S3 for volum
 
 | mig_aws_bucket 
 | -
-| S3 backup store
+| S3 backup bucket
 | Yes
 
 | mig_aws_region 
@@ -161,7 +166,7 @@ Volume snapshot locations are not supported with NooBaa. Please use S3 for volum
 
 | mig_noobaa_bucket 
 | -
-| NooBaa bucket name
+| NooBaa backup bucket
 | Yes
 
 | mig_noobaa_s3_url
@@ -197,8 +202,10 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
     -e"silent=False" \
     -e"guid=${GUID}" \
     -e"ACTION=delete" \
-    -e"mig_aws_region=region" \
-    -e"mig_aws_bucket=bucket-name" \
     -e"student_userid=${ANSIBLE_USER}" \
-    -e @./secret.yaml <1>
+    -e"cleanup_namespace=false" \ <1>
+    -e @./secret.yaml \
+    -e @./workload.yaml
 ----
+<1> Optionally, set this to `true` to delete the namespace after deleting workload. 
+

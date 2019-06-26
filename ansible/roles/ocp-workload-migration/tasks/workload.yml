@@ -12,4 +12,4 @@
     - "mig-storage.yaml.j2"
     - "mig-plan.yaml.j2"
     - "mig-migration.yaml.j2"
-  when: "{{ mig_mode }} == 'cli'"
+  when: mig_mode  == 'cli'

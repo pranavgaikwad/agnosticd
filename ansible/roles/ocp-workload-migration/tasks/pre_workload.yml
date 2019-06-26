@@ -2,6 +2,12 @@
 - name: "{{ title }} CRDs"
   include_tasks: "./crds.yml"
 
+- name: "{{ title }} namespace"
+  k8s:
+    state: "{{ state }}"
+    definition: "{{ lookup('template', 'namespace.yaml.j2') }}"
+  when: mig_cleanup_namespace or not destroy
+
 - name: "{{ title }} mig controller"
   k8s:
     state: "{{ state }}"

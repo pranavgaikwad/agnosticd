@@ -55,6 +55,8 @@ cluster_remote_name: remote-cluster
 # mig sa token
 mig_sa_token_remote_name: sa-token-remote
 
+mig_cleanup_namespace: false
+
 ############################# Workload ############################################################################
 
 destroy: "{{ False if ACTION=='create' else True }}"
