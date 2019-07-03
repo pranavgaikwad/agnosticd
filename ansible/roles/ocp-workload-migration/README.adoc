@@ -4,9 +4,9 @@
 
 This is a workload for Red Hat Cluster Migration Tool. It migrates applications from one OCP cluster to another.
 
-Following section explains how to install this workload on your OCP cluster.
+It includes migration operator and custom resources required to run the migration in CLI mode.
 
-=== Deploy Mig Controller using the workload
+=== Deploy the workload
 [source,'bash']
 ----
 ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-workloads/ocp-workload.yml \
@@ -26,51 +26,23 @@ ansible-playbook -i "bastion.${GUID}.${BASE_DOMAIN}", ./ansible/configs/ocp-work
 
 `mig_mode` variable decides whether to run the controller using CLI or UI.
 
-To run using UI, you need to deploy `ocp-workload-mig-ui` along with this workload.   
+When `mig_mode` is set to `cli`, you need to define variables required to run the migrations. 
 
-==== Variables
+When `mig_mode` is set to `ui`, you will follow the instructions in the UI to run migrations. The workload itself does not require any variables.
+
+=== Variables
 
 |===
 | Variable | Default Value | Description | Required 
-
-| mig_migration_namespaces
-| - 
-| Namespaces to migrate (Comma separated string of namespaces e.g. 'sample1,sample2')
-| Yes 
-
-| mig_cluster_remote_address
-| - 
-| URL to connect to remote cluster
-| Yes 
-
-| mig_sa_token_remote
-| - 
-| Service Account token for remote cluster
-| Yes
 
 | mig_mode
 | cli
 | Run migration through cli or ui (Values : cli, ui)
 | No
 
-| mig_controller_image
-| quay.io/ocpmigrate/mig-controller
-| Container image for mig controller
-| No
-
-| mig_controller_version
-| training-v1
-| Migration controller version
-| No
-
 | mig_namespace
 | mig
 | Namespace for migration resources
-| No
-
-| mig_crd_{cluster\|migration\|plan\|storage\|registry}
-| Default CRDs used by controller
-| Migration controller CRDs
 | No
 
 | mig_storage_name
@@ -85,12 +57,12 @@ To run using UI, you need to deploy `ocp-workload-mig-ui` along with this worklo
 
 | mig_backup_storage_provider
 | aws
-| Backend store provider for backups
+| Backend store provider for backups (Supported: NooBaa, AWS)
 | No
 
 | mig_volume_snapshot_provider
 | aws
-| Backend store provider for volume snapshots
+| Backend store provider for volume snapshots (Supported: AWS)
 | No
 
 | mig_plan_name
@@ -129,6 +101,30 @@ To run using UI, you need to deploy `ocp-workload-mig-ui` along with this worklo
 | No
 |===
 
+==== Migrations in CLI mode
+
+When mig mode is set to `cli`, migration UI is not installed. 
+
+Following variables are expected when `mig_mode` is set to `cli`.
+
+|===
+| Variable | Default | Description | Required
+
+| mig_migration_namespaces
+| - 
+| Namespaces to migrate (Comma separated string of namespaces e.g. 'sample1,sample2')
+| Yes 
+
+| mig_cluster_remote_address
+| - 
+| URL to connect to remote cluster
+| Yes 
+
+| mig_sa_token_remote
+| - 
+| Service Account token for remote cluster
+| Yes
+|===
 
 ==== Backup Storage Locations
 
@@ -138,7 +134,7 @@ Supported backup storage providers are - aws, noobaa. (Please note that `noobaa`
 
 Volume snapshot locations are not supported with NooBaa. Please use S3 for volume snapshots.
 
-==== AWS 
+===== AWS 
 
 |===
 | Variable | Default | Description | Required
@@ -164,7 +160,7 @@ Volume snapshot locations are not supported with NooBaa. Please use S3 for volum
 | Yes
 |===
 
-==== NooBaa 
+===== NooBaa 
 
 |===
 | Variable | Default | Description | Required
