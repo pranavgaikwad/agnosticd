@@ -2,8 +2,8 @@
 - name: "{{ title }} CRs"
   k8s:
     state: "{{ state }}"
-    definition: "{{ lookup('template', 'crs/v' + mig_controller_version + '/' + item) }}"
-  with_items:
+    definition: "{{ lookup('template', 'crs/' + item) }}"
+  loop:
     - "mig-cluster-local.yaml.j2"
     - "cluster-remote.yaml.j2"
     - "sa-secret-remote.yaml.j2"

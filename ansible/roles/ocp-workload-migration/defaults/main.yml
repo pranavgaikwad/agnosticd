@@ -1,65 +1,49 @@
 mig_mode: cli
-mig_controller_image: quay.io/ocpmigrate/mig-controller
-mig_controller_version: training-v1
 mig_namespace: mig
-mig_config_repo: https://raw.githubusercontent.com/fusor/mig-controller/{{ mig_controller_version }}/config
 
-# CRDs 
-mig_crd_cluster: "{{ mig_config_repo }}/crds/migration_v1alpha1_migcluster.yaml"
-mig_crd_migration: "{{ mig_config_repo }}/crds/migration_v1alpha1_migmigration.yaml"
-mig_crd_plan: "{{ mig_config_repo }}/crds/migration_v1alpha1_migplan.yaml"
-mig_crd_storage: "{{ mig_config_repo }}/crds/migration_v1alpha1_migstorage.yaml"
-mig_crd_registry: https://raw.githubusercontent.com/kubernetes/cluster-registry/master/cluster-registry-crd.yaml
+mig_controller_name: mig-controller
+mig_cluster_name: host
+mig_deploy_velero: true
+mig_deploy_controller: true
+mig_deploy_ui: "{{ false if mig_mode == 'cli' else true }}"
 
-
-############################# CRs ###############################################################################
-
+#### CRs Configuration 
 # mig storage 
 mig_storage_name: migration-sample
 mig_storage_creds_name: migstorage-creds
 mig_backup_storage_provider: aws
 mig_volume_snapshot_provider: aws
-
-# mig aws 
+# AWS BSL configuration
 mig_aws_bucket: ""
 mig_aws_region: "{{ lookup('env', 'AWS_REGION') }}"
 mig_aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 mig_aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
-
 # NooBaa configuration
 mig_noobaa_bucket: ""
 mig_noobaa_region: noobaa
 mig_noobaa_s3_url: s3.noobaa.svc.cluster.local
 mig_noobaa_access_key_id: "{{ lookup('env', 'NOOBAA_ACCESS_KEY_ID') }}"
 mig_noobaa_secret_access_key: "{{ lookup('env', 'NOOBAA_SECRET_ACCESS_KEY') }}"
-
 # mig plan
 mig_plan_name: migplan-sample
 mig_migration_namespaces: []
-
 # mig migration 
 mig_migration_name: migmigration-sample
 mig_quiesce_pods: false
 mig_is_host_cluster: false
-
 # mig clusters
 mig_cluster_remote_name: migcluster-remote
 mig_cluster_local_name: migcluster-local
 mig_cluster_remote_address: ""
-
 mig_is_local_cluster_host: false
 mig_is_remote_cluster_host: true
-
 # mig cluster remote
 cluster_remote_name: remote-cluster
-
 # mig sa token
 mig_sa_token_remote_name: sa-token-remote
-
 mig_cleanup_namespace: false
 
-############################# Workload ############################################################################
-
+#### Workload Configuration 
 destroy: "{{ False if ACTION=='create' else True }}"
 title: "{{ 'Creating' if not destroy else 'Removing' }}"
 state: "{{ 'present' if not destroy else 'absent' }}"     # state of k8s resources

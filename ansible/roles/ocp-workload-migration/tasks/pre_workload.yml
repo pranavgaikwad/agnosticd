@@ -1,14 +1,8 @@
 ---
-- name: "{{ title }} CRDs"
-  include_tasks: "./crds.yml"
-
-- name: "{{ title }} namespace"
+- name: "{{ title }} mig operator and controller"
   k8s:
     state: "{{ state }}"
-    definition: "{{ lookup('template', 'namespace.yaml.j2') }}"
-  when: mig_cleanup_namespace or not destroy
-
-- name: "{{ title }} mig controller"
-  k8s:
-    state: "{{ state }}"
-    definition: "{{ lookup('template', 'manifest.yaml.j2') }}"
+    definition: "{{ lookup('template', item) }}"
+  loop:
+    - "operator.yaml.j2" 
+    - "controller.yaml.j2"

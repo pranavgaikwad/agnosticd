@@ -1,0 +1,13 @@
+apiVersion: migration.openshift.io/v1alpha1
+kind: MigrationController
+metadata:
+  name: {{ mig_controller_name }}
+  namespace: {{ mig_namespace }}
+spec:
+  cluster_name: {{ mig_cluster_name }}
+  migration_velero: {{ mig_deploy_velero }}
+  migration_controller: {{ mig_deploy_controller }}
+  migration_ui: {{ mig_deploy_ui }}
+{% if "{{ mig_deploy_ui|bool }}" == true %}
+  mig_ui_cluster_api_endpoint: {{ mig_ui_cluster_api_endpoint if mig}}
+{% endif %}
