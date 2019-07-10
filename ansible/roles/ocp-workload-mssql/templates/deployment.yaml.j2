@@ -18,6 +18,7 @@ spec:
         name: {{ mssql_app_name }}
         app: {{ mssql_app_name }}
     spec:
+      serviceAccountName: {{ mssql_namespace }}-sa
       containers:
       - env:
         - name: ACCEPT_EULA
@@ -30,6 +31,8 @@ spec:
         image: {{ mssql_image }}
         imagePullPolicy: IfNotPresent
         name: {{ mssql_app_name }}
+        securityContext:
+          privileged: true
         ports:
         - containerPort: {{ mssql_port }}
         resources:
